@@ -15,7 +15,7 @@
     </execution>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/PUSL2002" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -147,7 +147,7 @@
       <option name="presentableId" value="Default" />
       <updated>1578409466057</updated>
       <workItem from="1578409478170" duration="9207000" />
-      <workItem from="1578421615306" duration="313000" />
+      <workItem from="1578421615306" duration="673000" />
     </task>
     <servers />
   </component>
