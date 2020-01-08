@@ -46,7 +46,7 @@
 
             </li>
             <li>
-                <a href="{{url('accidents/create')}}"><i class="fa fa-database"></i> <span>Reported Accidents List</span>
+                <a href="{{url('accidents')}}"><i class="fa fa-database"></i> <span>Reported Accidents List</span>
                     <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                 </a>
 

@@ -5,14 +5,14 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
-                <h4><i class="icon fa fa-ban"></i>   Product  Delete  Alert!</h4>
+                <h4><i class="icon fa fa-ban"></i>   Accidents's Data  Delete  Alert!</h4>
             </div>
             <div class="modal-body">
-                <p style="font-size: 20px">Are you sure you want to <strong> D E L E T E </strong> this product from the system ?</p>
+                <p style="font-size: 20px">Are you sure you want to <strong> D E L E T E </strong> this accident's data from the system ?</p>
             </div>
             <div class="modal-footer">
 
-                <form action="{{action('ProductController@destroy', 'test')}}" method="post">
+                <form action="{{action('AccidentController@destroy', 'test')}}" method="post">
                     {{method_field('delete')}}
                     {{csrf_field()}}
 

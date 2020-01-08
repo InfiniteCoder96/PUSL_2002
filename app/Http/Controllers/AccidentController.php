@@ -15,7 +15,8 @@ class AccidentController extends Controller
      */
     public function index()
     {
-        //
+        $accidents = Accident::all();
+        return view('accidents.index',compact('accidents'));
     }
 
     /**
@@ -29,7 +30,7 @@ class AccidentController extends Controller
             $id = 1;
         }
         else{
-            $id = DB::table('products')->latest('id')->first()->id + 1;
+            $id = DB::table('accidents')->latest('id')->first()->id + 1;
         }
 
         return view('accidents.create',compact('id'));

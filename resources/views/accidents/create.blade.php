@@ -1,16 +1,16 @@
-@extends('layouts.admin.app')
+@extends('layouts.user.app')
 
 
 @section('page-header')
     <section class="content-header">
         <h1>
-            Products
-            <small>new product</small>
+            Accidents
+            <small>new accident</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Product</li>
-            <li class="active">Add New Product</li>
+            <li class="active">Accident</li>
+            <li class="active">Report New Accident</li>
         </ol>
     </section>
 @endsection
@@ -42,70 +42,42 @@
                     <div class="box-body">
                         <div class="box-body">
                             <div class="row">
-                                <div class="col-xs-3">
+                                <div class="col-xs-6 col-md-6">
                                     <div class="form-group">
-                                        <label>Product Id</label>
-                                        <input type="text" name="prod_id" id="prod_id" class="form-control" placeholder="Product Id">
-                                        <span class="help-block hide">Help block with error</span>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-xs-6">
-                                    <div class="form-group">
-                                        <label>Product Name</label>
-                                        <input type="text" name="prod_name" id="prod_name" class="form-control" placeholder="Product name">
+                                        <label>Accident Name</label>
+                                        <input type="text" name="prod_name" id="prod_name" class="form-control" placeholder="Accident name">
                                         <span class="help-block hide">Help block with error</span>
                                     </div>
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-xs-3">
+                                <div class="col-xs-6 col-md-6">
                                     <div class="form-group">
-                                        <label>Product Selling Price</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Rs.</span>
-                                            <input type="text" name="prod_buy_price" id="prod_buy_price" class="form-control" placeholder="Selling Price">
-                                        </div>
+                                        <label>Accident Description</label>
+
+
+                                            <textarea class="form-control" ></textarea>
+
                                         <span class="help-block hide">Help block with error</span>
                                     </div>
                                 </div>
-
-                                <div class="col-xs-3">
+                                <div class="col-xs-6 col-md-6">
                                     <div class="form-group">
-                                        <label>Product Face Value</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Rs.</span>
-                                            <input type="text" name="prod_sell_price" id="prod_sell_price" class="form-control" placeholder="Face Value">
+                                        <label>Accident Location</label>
+                                        <div class="form-group">
+                                            <button class="btn btn-sm btn-success" >Locate on map</button>
+                                            <span class="help-block hide">Help block with error</span>
                                         </div>
-                                        <span class="help-block hide">Help block with error</span>
-                                    </div>
 
-                                </div>
 
-                                <div class="col-xs-3" style="display: none">
-                                    <div class="form-group">
-                                        <label>Product Sales Margin</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Rs.</span>
-                                            <input type="text" name="prod_profit" id="prod_profit" class="form-control" placeholder="Sales Margin" readonly>
-                                        </div>
                                         <span class="help-block hide">Help block with error</span>
                                     </div>
                                 </div>
-
-                                <div class="col-xs-3">
-                                    <div class="form-group">
-                                        <label>Product Margin percentage</label>
-                                        <div class="input-group">
-
-                                            <input type="text" name="prod_profit_percentage" id="prod_profit_percentage" class="form-control" placeholder="Margin percentage">
-                                            <span class="input-group-addon">%</span>
-
-                                        </div>
-                                        <span class="help-block hide">Help block with error</span>
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12">
+                                <div class="dropzone dropzone-previews" id="my-awesome-dropzone"></div>
                                 </div>
                             </div>
 
@@ -125,4 +97,23 @@
 
 @section('scripts')
 
+    <script>
+        Dropzone.options.myAwesomeDropzone = {
+            url: '#',
+            previewsContainer: ".dropzone-previews",
+            uploadMultiple: true,
+            maxFiles: 1,
+            acceptedFiles: ".jpeg,.jpg,.png,.gif",
+            addRemoveLinks: true,
+            timeout: 5000,
+            success: function(file, response)
+            {
+                console.log(response);
+            },
+            error: function(file, response)
+            {
+                return false;
+            }
+        }
+    </script>
 @endsection

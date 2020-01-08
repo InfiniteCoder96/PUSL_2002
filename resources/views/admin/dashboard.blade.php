@@ -17,85 +17,6 @@
 
 @section('content')
 
-
-<!-- Info boxes -->
-<div class="row">
-    <div class="col-lg-3 col-md-4 col-xs-12">
-        <!-- small box -->
-        <div class="small-box bg-teal">
-            <div class="inner">
-                <h3>Rs. {{number_format($tot_sale,2)}}</h3>
-
-                <p>Total Sale ({{Carbon::now()->format('F')}})</p>
-
-            </div>
-            <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-
-        </div>
-
-    </div>
-    <!-- /.col -->
-    <div class="col-lg-3 col-md-4 col-xs-12">
-        <!-- small box -->
-        <div class="small-box bg-maroon-gradient">
-            <div class="inner">
-                <h3>Rs. {{number_format($tot_short,2)}}</h3>
-
-                <p>Total Short ({{Carbon::now()->format('F')}})</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-android-warning"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div>
-    <!-- /.col -->
-
-    <!-- fix for small devices only -->
-    <div class="clearfix visible-sm-block"></div>
-
-    <div class="col-lg-3 col-md-4 col-xs-12">
-        <!-- small box -->
-        <div class="small-box bg-olive-active">
-            <div class="inner">
-                <h3>Rs. {{number_format($tot_excess,2)}}</h3>
-
-                <p>Total Excess ({{Carbon::now()->format('F')}})</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-android-arrow-up"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div>
-    <!-- /.col -->
-    <div class="col-lg-3 col-md-4 col-xs-12">
-        <!-- small box -->
-        <div class="small-box bg-purple-gradient">
-            <div class="inner">
-                <h3>{{$tot_free_Cards ?? 0}}</h3>
-
-                <p>Total Free Cards ({{Carbon::now()->format('F')}})</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-android-bulb"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div>
-    <!-- /.col -->
-</div>
 <!-- /.row -->
 
 <div class="row">
@@ -144,10 +65,6 @@
 
     <script>
 
-
-        var users =  <?php echo json_encode($users) ?>;
-        var sale_by_face_value =  <?php echo json_encode($free_cards) ?>;
-        var sale_cards = <?php echo  json_encode($sales_cards)?>;
 
         Highcharts.chart('cc', {
             chart: {

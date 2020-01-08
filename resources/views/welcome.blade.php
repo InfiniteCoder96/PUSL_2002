@@ -82,7 +82,7 @@
 <div class="flex-center position-ref full-height">
     @if (Route::has('login'))
         <div class="top-right links">
-            <a href="{{ url('/view-accident-map') }}">ACCIDENTS REPORT</a>
+            <a href="{{ url('/view-accident-map') }}" class="btn btn-primary" style="padding: 5px">ACCIDENTS REPORT</a>
             @auth
                 <a href="{{ url('/home') }}" class="btn btn-social-icon btn-google"><i class="fa fa-home"></i></a>
 
@@ -99,7 +99,7 @@
 
     <div class="content">
         <div class="title m-b-md" style="background-color: rgba(0, 0, 0, 0.84);border-radius: 5px;padding: 10px">
-            TRAFFIC ACCIDENT TRACKER
+            TRAFFIC ACCIDENTS TRACKER
         </div>
         <div class="links" style="background-color: rgba(0, 0, 0, 0.84);border-radius: 5px">
             <a>Powered by RDA, Sri Lanka</a>

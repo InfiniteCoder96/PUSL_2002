@@ -15,10 +15,12 @@ class CreateAccidentsTable extends Migration
     {
         Schema::create('accidents', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigIncrements('user_id');
-            $table->bigIncrements('lang');
-            $table->bigIncrements('lat');
-            $table->bigIncrements('lat');
+            $table->integer('user_id');
+            $table->float('lang');
+            $table->float('lat');
+            $table->string('image_01');
+            $table->string('image_02');
+            $table->string('status');
             $table->timestamps();
         });
     }
