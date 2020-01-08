@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+    use Illuminate\Http\Request;
+    use Auth;
 
 class LoginController extends Controller
 {
@@ -37,6 +39,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('guest:admin')->except('logout');
+        $this->middleware('guest:third_parties')->except('logout');
 
     }
     public function showAdminLoginForm()
@@ -54,6 +57,25 @@ class LoginController extends Controller
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
 
             return redirect()->intended('/admin');
+        }
+        return back()->withInput($request->only('email', 'remember'));
+    }
+
+    public function showThird_PartiesLoginForm()
+    {
+        return view('auth.login', ['url' => 'third_parties']);
+    }
+
+    public function Third_PartiesLogin(Request $request)
+    {
+        $this->validate($request, [
+            'email'   => 'required|email',
+            'password' => 'required|min:6'
+        ]);
+
+        if (Auth::guard('third_parties')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
+
+            return redirect()->intended('/third_parties');
         }
         return back()->withInput($request->only('email', 'remember'));
     }

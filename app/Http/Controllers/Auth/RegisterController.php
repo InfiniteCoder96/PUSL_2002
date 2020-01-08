@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use App\Admin;
+use App\third_parties;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -43,6 +44,8 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
         $this->middleware('guest:admin');
+        $this->middleware('guest:third_parties');
+
 
     }
 
@@ -61,6 +64,14 @@ class RegisterController extends Controller
         ]);
     }
 
+    public function showAdminRegisterForm()
+    {
+        return view('auth.register', ['url' => 'admin']);
+    }
+    public function showThird_PartiesRegisterForm()
+    {
+        return view('auth.register', ['url' => 'third_parties']);
+    }
     /**
      * Create a new user instance after a valid registration.
      *
@@ -84,5 +95,15 @@ class RegisterController extends Controller
             'password' => Hash::make($request['password']),
         ]);
         return redirect()->intended('login/admin');
+    }
+    protected function createThird_Parties(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        $third_parties = third_parties::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
+        return redirect()->intended('login/third_parties');
     }
 }

@@ -50,6 +50,10 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+        'third_parties' => [
+            'driver' => 'session',
+            'provider' => 'third_parties',
+        ],
     ],
 
     /*
@@ -77,6 +81,10 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Admin::class,
+        ],
+        'third_parties' => [
+            'driver' => 'eloquent',
+            'model' => App\third_parties::class,
         ],
 
         // 'users' => [
