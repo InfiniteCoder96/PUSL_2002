@@ -68,10 +68,12 @@ class RegisterController extends Controller
     {
         return view('auth.register', ['url' => 'admin']);
     }
+
     public function showThird_PartiesRegisterForm()
     {
         return view('auth.register', ['url' => 'third_parties']);
     }
+
     /**
      * Create a new user instance after a valid registration.
      *

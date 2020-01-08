@@ -104,6 +104,9 @@
         </main>
     </div>
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTPdk_OYvinStVEVcWPFtkVevH2UDOYBo"
+            async defer></script>
+
     <script src="{{asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
     <script src="{{asset('bower_components/jquery-ui/jquery-ui.min.js')}}"></script>
     <script src="{{asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
@@ -145,5 +148,7 @@
     <script src="{{asset('bower_components/chart.js/Chart.js')}}"></script>
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
+
+    @yield('scripts')
 </body>
 </html>

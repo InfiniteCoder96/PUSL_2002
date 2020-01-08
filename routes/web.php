@@ -28,12 +28,9 @@ Route::post('/register/admin', 'Auth\RegisterController@createAdmin');
 Route::post('/login/third_parties', 'Auth\LoginController@Third_PartiesLogin');
 Route::post('/register/third_parties', 'Auth\RegisterController@createThird_Parties');
 
-
 Route::view('/admin', 'admin');
 Route::view('/third_parties', 'third_parties');
-Route::view('/home', 'home')->middleware('auth');
 
+Route::get('/view-accident-map', 'AccidentController@view_accident_map')->name('view_accident_map');
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('accidents','AccidentController');

@@ -82,6 +82,7 @@
 <div class="flex-center position-ref full-height">
     @if (Route::has('login'))
         <div class="top-right links">
+            <a href="{{ url('/view-accident-map') }}">ACCIDENTS REPORT</a>
             @auth
                 <a href="{{ url('/home') }}" class="btn btn-social-icon btn-google"><i class="fa fa-home"></i></a>
 
