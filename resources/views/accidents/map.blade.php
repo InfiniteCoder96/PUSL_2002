@@ -45,9 +45,79 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <style>
+        html, body {
+            background-image: url('https://i.pinimg.com/originals/41/aa/09/41aa09f7665923b7baa82997cdb49d67.gif');
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: whitesmoke;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 200;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .top-right {
+            position: absolute;
+            right: 10px;
+        }
+
+        .content {
+
+            text-align: center;
+        }
+
+        .title {
+            font-size: 84px;
+        }
+
+        .links > a {
+            color: whitesmoke;
+            padding: 0 25px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: .1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .m-b-md {
+            margin-bottom: 30px;
+        }
+
+        .card { background-color: rgba(245, 245, 245, 0.4); }
+        .card-header, .card-footer { opacity: 1;color: whitesmoke}
+
+    </style>
 </head>
 <body >
+<nav class="navbar navbar-light navbar-expand-lg bg-dark" style="padding: 10px">
+    @if (Route::has('login'))
+        <div class="top-right links">
+            @if(Auth::guard('admin')->check())
+                <a href="{{ url('/home') }}" class="btn btn-social-icon btn-info"><i class="fa fa-home"></i></a>
+                <div class="pull-right">
+                    <a class="btn btn-warning" href="{{ route('logout') }}" style="margin-left: 5px"
+                       onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                        SIGN OUT
+                    </a>
 
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+
+                </div>
+            @else
+                <a href="{{ route('login') }}">LOGIN</a>
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}">Register</a>
+                @endif
+            @endauth
+        </div>
+    @endif
+</nav>
 <div class="content">
     <div id="map" style="height: 500px;width: 100%;margin: 0 auto"></div>
     <br>

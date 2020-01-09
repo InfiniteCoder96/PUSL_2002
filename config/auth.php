@@ -84,7 +84,7 @@ return [
         ],
         'third_parties' => [
             'driver' => 'eloquent',
-            'model' => App\third_parties::class,
+            'model' => App\ThirdParty::class,
         ],
 
         // 'users' => [

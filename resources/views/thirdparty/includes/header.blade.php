@@ -5,7 +5,7 @@
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>TAT</b></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>TAT ADMIN</b></span>
+        <span class="logo-lg"><b>TAT</b></span>
     </a>
 
     <!-- Header Navbar -->
@@ -25,7 +25,7 @@
                         <!-- The user image in the navbar-->
                         <img src="{{asset('dist/img/avatar5.png')}}" class="user-image" alt="User Image">
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                        <span class="hidden-xs"> {{ Auth::guard('admin')->user()->name }}</span>
+                        <span class="hidden-xs"> {{ Auth::user()->name }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
@@ -33,8 +33,8 @@
                             <img src="{{asset('dist/img/avatar5.png')}}" class="img-circle" alt="User Image">
 
                             <p>
-                                {{ Auth::guard('admin')->user()->name }}
-                                <small>Member since {{ Auth::guard('admin')->user()->created_at }}</small>
+                                {{ Auth::user()->name }}
+                                <small>Member since {{ Auth::user()->created_at }}</small>
                             </p>
                         </li>
                         <!-- Menu Body -->

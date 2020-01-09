@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\ThirdParty;
 use App\User;
 use App\Admin;
 use App\third_parties;
@@ -59,10 +60,21 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
+            'nic' => ['required', 'string', 'max:10'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
+
+    protected function admin_validator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:admins'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+    }
+
 
     public function showAdminRegisterForm()
     {
@@ -71,7 +83,7 @@ class RegisterController extends Controller
 
     public function showThird_PartiesRegisterForm()
     {
-        return view('auth.register', ['url' => 'third_parties']);
+        return view('auth.register_third_parties', ['url' => 'third_parties']);
     }
 
     /**
@@ -84,13 +96,14 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
+            'nic' => $data['nic'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
     }
     protected function createAdmin(Request $request)
     {
-        $this->validator($request->all())->validate();
+        $this->admin_validator($request->all())->validate();
         $admin = Admin::create([
             'name' => $request['name'],
             'email' => $request['email'],
@@ -98,14 +111,6 @@ class RegisterController extends Controller
         ]);
         return redirect()->intended('login/admin');
     }
-    protected function createThird_Parties(Request $request)
-    {
-        $this->validator($request->all())->validate();
-        $third_parties = third_parties::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
-        ]);
-        return redirect()->intended('login/third_parties');
-    }
+
+
 }

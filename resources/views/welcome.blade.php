@@ -82,14 +82,23 @@
 <div class="flex-center position-ref full-height">
     @if (Route::has('login'))
         <div class="top-right links">
-            <a href="{{ url('/view-accident-map') }}" class="btn btn-primary" style="padding: 5px">ACCIDENTS REPORT</a>
-            @auth
-                <a href="{{ url('/home') }}" class="btn btn-social-icon btn-google"><i class="fa fa-home"></i></a>
+            <a href="{{ url('/view-accident-map') }}" class="btn btn-danger" style="padding: 5px">ACCIDENTS REPORT</a>
+            @if(Auth::guard('admin')->check())
+                <a href="{{ url('/home') }}" class="btn btn-social-icon btn-info"><i class="fa fa-home"></i></a>
+                <div class="pull-right">
+                    <a class="btn btn-warning" href="{{ route('logout') }}" style="margin-left: 5px"
+                       onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                        SIGN OUT
+                    </a>
 
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+
+                </div>
             @else
                 <a href="{{ route('login') }}">LOGIN</a>
-
-
                 @if (Route::has('register'))
                     <a href="{{ route('register') }}">Register</a>
                 @endif

@@ -1,22 +1,22 @@
 
-<div class="modal modal-danger fade" id="productDeleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="acceptConfirmationModal" aria-hidden="true">
+<div class="modal modal-danger fade" id="vendorDeleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="acceptConfirmationModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
-                <h4><i class="icon fa fa-ban"></i>   Accidents's Data  Delete  Alert!</h4>
+                <h4><i class="icon fa fa-ban"></i>   Vendor  Delete  Alert!</h4>
             </div>
             <div class="modal-body">
-                <p style="font-size: 20px">Are you sure you want to <strong> D E L E T E </strong> this accident's data from the system ?</p>
+                <p style="font-size: 20px">Are you sure you want to <strong> D E L E T E </strong> this vendor from the system ?</p>
             </div>
             <div class="modal-footer">
 
-                <form action="{{action('UserController@destroy', 'test')}}" method="post">
+                <form action="{{action('VendorController@destroy', 'test')}}" method="post">
                     {{method_field('delete')}}
                     {{csrf_field()}}
 
-                    <input name="prod_id" id="prod_id" type="hidden" value="">
+                    <input name="vendor_id" id="vendor_id" type="hidden" value="">
                     <input name="_method" type="hidden" value="DELETE">
 
 

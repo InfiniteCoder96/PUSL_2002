@@ -76,7 +76,7 @@
                     <div class="card-header">Login</div>
                     <div class="card-body">
                     @isset($url)
-                    <form method="POST"action='{{ url("login/$url") }}' aria-label="{{ __('Login') }}">
+                    <form method="POST" action='{{ url("login/$url") }}' aria-label="{{ __('Login') }}">
                         @else
                             <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
                                 @endisset
@@ -123,7 +123,7 @@
                         </div>
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
+                            <div class="col-md-10 offset-md-1">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
@@ -133,6 +133,13 @@
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+                                @isset($url)
+                                    @else
+                                    <a class="btn btn-link" href="{{ url('/login/admin') }}">
+                                        {{ __('Login as Admin?') }}
+                                    </a>
+                                @endisset
+
                             </div>
                         </div>
                     </form>

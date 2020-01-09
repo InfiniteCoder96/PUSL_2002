@@ -25,4 +25,14 @@ class HomeController extends Controller
     {
         return view('user.dashboard');
     }
+
+    public function admin_index()
+    {
+        return view('admin.dashboard');
+    }
+
+    public function third_parties_index()
+    {
+        return view('thirdparty.dashboard');
+    }
 }
