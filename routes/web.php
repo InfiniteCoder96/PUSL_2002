@@ -40,6 +40,7 @@ Route::get('/accidents/all', 'AccidentController@all')->name('all');
 Route::post('/accidents/approve', 'AccidentController@approve')->name('accidents.approve');
 Route::post('/accidents/reject', 'AccidentController@reject')->name('accidents.reject');
 Route::post('/accidents/searchAccidents', 'AccidentController@searchAccidents')->name('accidents.searchAccidents');
+Route::get('/accidents/approved-list', 'AccidentController@approved_list')->name('approved_list');
 
 Route::resource('users','UserController');
 Route::resource('accidents','AccidentController');

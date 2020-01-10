@@ -68,7 +68,7 @@ class AccidentController extends Controller
         $accident['lat'] = $lat;
 
         for($i = 0; $i < 2; $i++){
-            $imageName = $images[$i]->getClientOriginalName();
+            $imageName = $accident_name . '_' . auth()->user()->id;
             $images[$i]->move(public_path('images'),$imageName);
 
             $img = 'image_0' . ($i + 1);
@@ -169,6 +169,13 @@ class AccidentController extends Controller
         return json_encode($accidents);
 
 
+    }
+
+    public function approved_list(){
+
+        $accidents = Accident::where('status','=','approved')->get();
+
+        return view('accidents.approved_list', compact('accidents'));
     }
 }
 

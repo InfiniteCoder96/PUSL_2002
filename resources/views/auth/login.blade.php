@@ -16,6 +16,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
     <!-- Styles -->
     <style>
         html, body {
@@ -73,7 +74,19 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card ">
+
                     <div class="card-header">Login</div>
+
+                        <div class="col-md-8 col-md-offset-2">
+                            @if ($message = Session::get('message'))
+                                <div class="callout callout-danger">
+                                    <p>{{$message}}</p>
+                                </div>
+
+                            @endif
+                        </div>
+                    
+
                     <div class="card-body">
                         <form method="POST" action="{{ url('/login-me') }}" aria-label="{{ __('Login') }}">
                             @csrf

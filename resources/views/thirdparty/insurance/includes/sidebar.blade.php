@@ -38,12 +38,11 @@
             <li class="active"><a href="{{url('/dashboard')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
 
             <li >
-                <a href="{{url('accidents/create')}}"><i class="fa fa-bus"></i> <span>Approved Accident List</span>
+                <a href="{{url('/accidents/approved-list')}}"><i class="fa fa-bus"></i> <span>Approved Accident List</span>
                     <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
                 </a>
-
             </li>
             <li>
                 <a href="{{url('accidents')}}"><i class="fa fa-database"></i> <span>Contact Drivers</span>

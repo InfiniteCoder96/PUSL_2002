@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
     use Illuminate\Http\Request;
     use Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
@@ -36,15 +37,19 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/dashboard';
 
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string', 'min:8'],
+        ]);
+    }
 
     public function login_me(Request $request)
     {
         $input = $request->all();
 
-        $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $this->validator($request->all())->validate();
 
         if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
         {
@@ -70,9 +75,7 @@ class LoginController extends Controller
                 return redirect()->route('dashboard');
             }
         }else{
-            throw ValidationException::withMessages([
-                $request->get('email') => [trans('auth.failed')],
-            ]);
+            return redirect()->back()->with('message', "Invalid Credentials , Please try again.");
         }
     }
 
