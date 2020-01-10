@@ -106,7 +106,7 @@
         </div>
     </div>
 
-    @include('admin.includes.modals.productDeleteConfirmationModal')
+    @include('admin.includes.modals.vendorDeleteConfirmationModal')
 
 
 @endsection

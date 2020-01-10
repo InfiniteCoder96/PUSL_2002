@@ -16,11 +16,13 @@ class CreateAccidentsTable extends Migration
         Schema::create('accidents', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id');
-            $table->float('lang');
-            $table->float('lat');
+            $table->string('name');
+            $table->text('description');
+            $table->double('lang');
+            $table->double('lat');
             $table->string('image_01');
             $table->string('image_02');
-            $table->string('status');
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

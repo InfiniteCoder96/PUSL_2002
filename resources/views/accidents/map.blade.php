@@ -95,7 +95,7 @@
 <nav class="navbar navbar-light navbar-expand-lg bg-dark" style="padding: 10px">
     @if (Route::has('login'))
         <div class="top-right links">
-            @if(Auth::guard('admin')->check())
+            @if(Auth::check())
                 <a href="{{ url('/home') }}" class="btn btn-social-icon btn-info"><i class="fa fa-home"></i></a>
                 <div class="pull-right">
                     <a class="btn btn-warning" href="{{ route('logout') }}" style="margin-left: 5px"
@@ -122,7 +122,7 @@
     <div id="map" style="height: 500px;width: 100%;margin: 0 auto"></div>
     <br>
     <div class="row">
-        <div class="col-lg-3 col-md-4 col-xs-12">
+        <div class="col-lg-4 col-md-4 col-xs-12">
             <!-- small box -->
             <div class="small-box bg-red">
                 <div class="inner">
@@ -142,7 +142,7 @@
 
         </div>
 
-        <div class="col-lg-3 col-md-4 col-xs-12">
+        <div class="col-lg-4 col-md-4 col-xs-12">
             <!-- small box -->
             <div class="small-box bg-orange">
                 <div class="inner">
@@ -162,7 +162,7 @@
 
         </div>
 
-        <div class="col-lg-3 col-md-4 col-xs-12">
+        <div class="col-lg-4 col-md-4 col-xs-12">
             <!-- small box -->
             <div class="small-box bg-green">
                 <div class="inner">
@@ -193,6 +193,10 @@
     $(function () {
 
         var map;
+        var marker;
+        var latVal;
+        var lanVal;
+
         geoLocationInit();
 
         function geoLocationInit() {
@@ -203,21 +207,35 @@
             else{
                 alert("Browser not supported !")
             }
+
+
         }
 
         function success(position) {
-            var latVal = position.coords.latitude;
-            var lanVal = position.coords.longitude;
+            latVal = position.coords.latitude;
+            lanVal = position.coords.longitude;
 
             var myLatLang = new google.maps.LatLng(latVal,lanVal);
 
             createMap(myLatLang);
 
-            nearbysearch(myLatLang,"school");
+            searchAccidents(latVal,lanVal);
+
+            google.maps.event.addListener(marker, 'dragend', function(marker) {
+
+                var latLng = marker.latLng;
+
+                latVal = latLng.lat();
+                lanVal = latLng.lng();
+
+                searchAccidents(latVal,lanVal);
+
+            });
+
+
         }
 
         function fail() {
-
             alert("it fails");
         }
 
@@ -229,21 +247,75 @@
                 zoom: 12
             });
 
-            var marker = new google.maps.Marker({
+            marker = new google.maps.Marker({
                 position: myLatLang,
                 map: map,
-                title: 'Your Location !'
+                title: 'Your Location !',
+                draggable: true
             });
         }
 
-        function createMarker(latlang,icn,name) {
-            var marker = new google.maps.Marker({
+        var infowindow = new google.maps.InfoWindow({});
+
+        function createMarker(latlang,icn,name,val) {
+            const amarker = new google.maps.Marker({
                 position: latlang,
                 map: map,
                 icon: icn,
                 title: name
             });
+
+
+           /* var contentString = '<div id="content">'+
+                '<div id="siteNotice">'+
+                '</div>'+
+                '<h1 id="firstHeading" style="color: black">' + name + '</h1>'+
+                '<div id="bodyContent">'+
+                '<p style="color: black">' + val.description +'</p>'+
+                '<p style="color: black">Status:<span class="container">' +
+                '                                            <span class="label label-success">'+ val.status +'</span>' +
+                '                                        </span></p>'+
+                '</div>'+
+                '</div>';*/
+
+            var contentString = document.createElement('div');
+            var h4 = document.createElement('h4');
+            h4.textContent = name;
+            h4.style.color = 'black';
+
+            var para = document.createElement('p');
+            para.textContent = val.description;
+            para.style.color = 'black';
+
+            contentString.appendChild(h4);
+            contentString.appendChild(para);
+            contentString.appendChild(document.createElement('br'));
+
+            var img_01 = document.createElement('img');
+            img_01.src = 'images/' + val.image_01 ;
+            img_01.style.width = '40%';
+            img_01.style.height = '150px';
+            img_01.style.margin = '10px';
+            contentString.appendChild(img_01);
+
+            var img_02 = document.createElement('img');
+            img_02.src = 'images/' + val.image_02 ;
+            img_02.style.width = '40%';
+            img_01.style.height = '150px';
+            contentString.appendChild(img_02);
+
+            google.maps.event.addListener(amarker, 'click', function() {
+                infowindow.close(); // Close previously opened infowindow
+                infowindow.setContent(contentString);
+                infowindow.open(map, amarker);
+            });
+
+
         }
+
+
+
+
 
         function nearbysearch(myLatLang,type) {
 
@@ -279,8 +351,39 @@
 
         }
 
+        function searchAccidents(latVal,lanVal) {
 
-    })
+            $.ajax({
+                url: '{{route('accidents.searchAccidents')}}',
+                method:'POST',
+                data: {
+                    lat: latVal,
+                    lang: lanVal,
+                    _token: '{{ csrf_token() }}'
+                },
+                dataType: 'json',
+                success: function (accidents) {
+
+                    $.each(accidents, function (i, val) {
+
+                        var alatval = val.lat;
+                        var alangval = val.lang;
+                        var sname = val.name;
+
+                        var aLatLng = new google.maps.LatLng(alatval, alangval);
+                        var aicon = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+
+                        createMarker(aLatLng,aicon,sname,val)
+                    })
+                }
+            })
+
+
+        }
+
+
+
+    });
 </script>
 </body>
 </html>

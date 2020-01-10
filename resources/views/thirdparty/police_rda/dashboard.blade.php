@@ -1,5 +1,5 @@
 <?php use Carbon\Carbon; ?>
-@extends('layouts.user.app')
+@extends('layouts.thirdparty.police_rda.app')
 
 
 @section('page-header')
@@ -21,7 +21,7 @@
             <!-- small box -->
             <div class="small-box bg-teal">
                 <div class="inner">
-                    <h3>{{($pending + $approved + $rejected)}}</h3>
+                    <h3>5</h3>
 
                     <p>Accidents Reported</p>
 
@@ -41,7 +41,7 @@
             <!-- small box -->
             <div class="small-box bg-maroon-gradient">
                 <div class="inner">
-                    <h3>{{$rejected}}</h3>
+                    <h3>3</h3>
 
                     <p>Rejected</p>
                 </div>
@@ -62,7 +62,7 @@
             <!-- small box -->
             <div class="small-box bg-olive-active">
                 <div class="inner">
-                    <h3>{{$approved}}</h3>
+                    <h3>1</h3>
 
                     <p>Approved</p>
                 </div>
@@ -79,7 +79,7 @@
             <!-- small box -->
             <div class="small-box bg-purple-gradient">
                 <div class="inner">
-                    <h3>{{$pending}}</h3>
+                    <h3>1</h3>
 
                     <p>Pending</p>
                 </div>

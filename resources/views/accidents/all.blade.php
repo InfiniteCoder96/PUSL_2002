@@ -1,4 +1,4 @@
-@extends('layouts.user.app')
+@extends('layouts.thirdparty.police_rda.app')
 
 
 @section('page-header')
@@ -20,6 +20,22 @@
     <div class="row">
         <div class="col-xs-12">
 
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success alert-dismissible" id="success-alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-check"></i> Alert!</h4>
+                    {{ $message }}
+                </div>
+
+            @endif
+            @if ($message = Session::get('unsuccess'))
+                <div class="alert alert-danger alert-dismissible" id="success-alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-check"></i> Alert!</h4>
+                    {{ $message }}
+                </div>
+
+            @endif
             <div class="box">
                 <div class="box-header">
 
@@ -42,7 +58,7 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="example1" class="table table-bordered table-striped" >
                         <thead>
                         <tr>
                             <th>#</th>
@@ -52,6 +68,7 @@
                             <th>Longitude</th>
                             <th>Photos</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -63,18 +80,56 @@
                                 <td>{{$accident->description}}</td>
                                 <td>{{$accident->lang}}</td>
                                 <td>{{$accident->lat}}</td>
-                                <td style="width: 50%">
+                                <td style="width: 30%">
                                     <a href="{{asset('images/' . $accident->image_01)}}"><img src="{{asset('images/' . $accident->image_01)}}" style="width: 150px;height: 100px"/></a>
                                     <a href="{{asset('images/' . $accident->image_02)}}"><img src="{{asset('images/' . $accident->image_02)}}" style="width: 150px;height: 100px"/></a>
                                 </td>
                                 @if($accident->status == 'Approved')
-                                    <td style="background-color: green;color: white">{{$accident->status}}</td>
+                                    <td>
+                                        <span class="container">
+                                            <span class="label label-success">{{$accident->status}}</span>
+                                        </span>
+                                    </td>
                                 @elseif($accident->status == 'Rejected')
-                                    <td style="background-color: red;color: white">{{$accident->status}}</td>
+                                    <td>
+                                        <span class="container">
+                                            <span class="label label-danger">{{$accident->status}}</span>
+                                        </span>
+                                    </td>
                                 @else
-                                    <td style="background-color: orange;color: white">{{$accident->status}}</td>
-                                @endif
+                                    <td >
+                                        <span class="container">
+                                            <span class="label label-warning">{{$accident->status}}</span>
+                                        </span>
 
+                                    </td>
+                                @endif
+                                <td >
+                                    <div class="col-md-6">
+                                            <button
+                                                    type="button"
+                                                    class="btn btn-xs btn-success"
+                                                    data-toggle="modal"
+                                                    data-target="#accidentApproveConfirmationModal"
+                                                    data-id="{{$accident['id']}}"
+                                            >Approve</button>
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                            <button
+                                                    type="button"
+                                                    class="btn btn-xs btn-danger"
+                                                    data-toggle="modal"
+                                                    data-target="#accidentRejectConfirmationModal"
+                                                    data-id="{{$accident['id']}}"
+                                            >Reject</button>
+
+                                    </div>
+
+
+
+                                </td>
                             </tr>
                         @endforeach
 
@@ -88,7 +143,7 @@
                             <th>Longitude</th>
                             <th>Photos</th>
                             <th>Status</th>
-
+                            <th>Action</th>
 
                         </tr>
                         </tfoot>
@@ -99,7 +154,9 @@
         </div>
     </div>
 
-    @include('accidents.includes.accidentDeleteConfirmationModal')
+    @include('accidents.includes.accidentApproveConfirmationModal')
+    @include('accidents.includes.accidentRejectConfirmationModal')
+
 
 
 @endsection
@@ -107,8 +164,6 @@
     <script>
 
         $(function () {
-
-
 
             $('.select2').select2()
             $('#example1').DataTable({
@@ -124,7 +179,7 @@
             })
         })
 
-        $('#productDeleteConfirmationModal').on('show.bs.modal', function(event){
+        $('#accidentApproveConfirmationModal').on('show.bs.modal', function(event){
 
             var button = $(event.relatedTarget);
 
@@ -132,7 +187,19 @@
 
             var modal = $(this);
 
-            modal.find('.modal-footer #prod_id').val(id);
+            modal.find('.modal-footer #acc_id').val(id);
+
+        });
+
+        $('#accidentRejectConfirmationModal').on('show.bs.modal', function(event){
+
+            var button = $(event.relatedTarget);
+
+            var id = button.data('id');
+
+            var modal = $(this);
+
+            modal.find('.modal-footer #acc_id').val(id);
 
         });
     </script>

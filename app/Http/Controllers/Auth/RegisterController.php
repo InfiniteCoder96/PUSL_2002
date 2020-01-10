@@ -8,6 +8,7 @@ use App\ThirdParty;
 use App\User;
 use App\Admin;
 use App\third_parties;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -27,28 +28,19 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    use AuthenticatesUsers;
+
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
 
     /**
-     * Where to redirect users after registration.
+     * Where to redirect users after login.
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
-        $this->middleware('guest:admin');
-        $this->middleware('guest:third_parties');
-
-
-    }
+    protected $redirectTo = '/dashboard';
 
     /**
      * Get a validator for an incoming registration request.
@@ -101,6 +93,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+
     protected function createAdmin(Request $request)
     {
         $this->admin_validator($request->all())->validate();

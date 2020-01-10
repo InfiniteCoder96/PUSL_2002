@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -14,9 +16,58 @@ class UserController extends Controller
      */
     public function index()
     {
-        $drivers = User::all();
+        $drivers = User::all()->where('user_type','=','driver');
         return view('admin.user_index',compact('drivers'));
     }
+
+    public function police_rda_index()
+    {
+        $drivers = User::all()->where('user_type','=','police_rda');
+        return view('admin.user_index',compact('drivers'));
+    }
+
+    public function insurance_index()
+    {
+        $drivers = User::all()->where('user_type','=','insurance');
+        return view('admin.user_index',compact('drivers'));
+    }
+
+    protected function thirdparty_validator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'nic' => ['required', 'string', 'max:10','min:10', 'unique:users'],
+            'type' => ['required', 'string', 'max:255'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+    }
+
+    public function showThird_PartiesRegisterForm()
+    {
+        return view('auth.register_third_parties', ['url' => 'third_parties']);
+    }
+
+    protected function createThird_Parties(Request $request)
+    {
+        $this->thirdparty_validator($request->all())->validate();
+        $third_parties = User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'nic' => $request['nic'],
+            'user_type' => $request['type'],
+            'password' => Hash::make($request['password']),
+        ]);
+
+        if($request->get('type') == 'insurance')
+            return redirect('/third_parties/insurance_index')
+                ->with('success','Insurance staff user added successfully.');
+        else
+            return redirect('/third_parties/police_rda_index')
+                ->with('success','Police / RDA user added successfully.');
+    }
+
+
 
     /**
      * Show the form for creating a new resource.

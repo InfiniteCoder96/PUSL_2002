@@ -12,7 +12,17 @@
             </div>
             <div class="modal-footer">
 
+                <form action="{{action('VendorController@destroy', 'test')}}" method="post">
+                    {{method_field('delete')}}
+                    {{csrf_field()}}
 
+                    <input name="vendor_id" id="vendor_id" type="hidden" value="">
+                    <input name="_method" type="hidden" value="DELETE">
+
+
+                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">No, Go back</button>
+                    <button class="btn btn-outline" id="submitbtn">Yes, I'm Sure</button>
+                </form>
             </div>
         </div>
         <!-- /.modal-content -->

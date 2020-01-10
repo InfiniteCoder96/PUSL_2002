@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>RCSM v1.0.0</title>
+    <title>PUSL 2002</title>
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('dist/img/favicon.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('dist/img/favicon.png')}}">
     <!-- Fonts -->
@@ -75,40 +75,55 @@
                 <div class="card ">
                     <div class="card-header">Login</div>
                     <div class="card-body">
-                    @isset($url)
-                    <form method="POST" action='{{ url("login/$url") }}' aria-label="{{ __('Login') }}">
-                        @else
-                            <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
-                                @endisset
-                        @csrf
+                        <form method="POST" action="{{ url('/login-me') }}" aria-label="{{ __('Login') }}">
+                            @csrf
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <div class="form-group row">
+                                <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <div class="col-md-6">
+                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                                    @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                                {{--<div class="form-group row">
+                                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Login as') }}</label>
+
+                                    <div class="col-md-6">
+                                        <select  name="type" id="type" style="width: 100%;" class="form-control @error('nic') is-invalid @enderror"  required autocomplete="nic" autofocus>
+                                            <option selected="selected" disabled>~ Select a user type ~</option>
+                                            <option value="driver">Driver</option>
+                                            <option value="admin">Web Master</option>
+                                            <option value="police_rda">Police / RDA User</option>
+                                            <option value="insurance">Insurance Staff User</option>
+                                        </select>
+                                        @error('password')
+                                        <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                @enderror
-                            </div>
-                        </div>
+                                        @enderror
+                                    </div>
+                                </div>--}}
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
 
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
@@ -123,7 +138,7 @@
                         </div>
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-10 offset-md-1">
+                            <div class="col-md-8 offset-md-2">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
@@ -133,12 +148,7 @@
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
-                                @isset($url)
-                                    @else
-                                    <a class="btn btn-link" href="{{ url('/login/admin') }}">
-                                        {{ __('Login as Admin?') }}
-                                    </a>
-                                @endisset
+
 
                             </div>
                         </div>

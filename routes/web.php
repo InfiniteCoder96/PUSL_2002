@@ -17,27 +17,29 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::view('/admin', 'admin.dashboard');
-Route::view('/third_parties', 'HomeController@third_parties_index')->name('third_parties_index');
+
+Route::get('/dashboard', 'HomeController@showdashboard')->name('dashboard');
 
 Route::get('/login/admin', 'Auth\LoginController@showAdminLoginForm');
 Route::get('/register/admin', 'Auth\RegisterController@showAdminRegisterForm');
 Route::get('/login/third_parties', 'Auth\LoginController@showThird_PartiesLoginForm');
 
+Route::get('/login-me', 'Auth\LoginController@showLogin');
+Route::post('/login-me', 'Auth\LoginController@login_me');
+Route::post('/logout-me', 'Auth\LoginController@logoutMe');
 
-Route::post('/login/admin', 'Auth\LoginController@adminLogin');
-Route::post('/register/admin', 'Auth\RegisterController@createAdmin');
-Route::post('/login/third_parties', 'Auth\LoginController@Third_PartiesLogin');
-
-Route::get('/register/third_parties', 'ThirdPartyController@showThird_PartiesRegisterForm');
-Route::post('/register/third_parties', 'ThirdPartyController@createThird_Parties');
-
+Route::get('/register/third_parties', 'UserController@showThird_PartiesRegisterForm');
+Route::post('/register/third_parties', 'UserController@createThird_Parties');
 
 Route::get('/view-accident-map', 'AccidentController@view_accident_map')->name('view_accident_map');
-Route::get('/third_parties/police_rda_index', 'ThirdPartyController@police_rda_index')->name('police_rda_index');
-Route::get('/third_parties/insurance_index', 'ThirdPartyController@insurance_index')->name('insurance_index');
+
+Route::get('/third_parties/police_rda_index', 'UserController@police_rda_index')->name('police_rda_index');
+Route::get('/third_parties/insurance_index', 'UserController@insurance_index')->name('insurance_index');
+
+Route::get('/accidents/all', 'AccidentController@all')->name('all');
+Route::post('/accidents/approve', 'AccidentController@approve')->name('accidents.approve');
+Route::post('/accidents/reject', 'AccidentController@reject')->name('accidents.reject');
+Route::post('/accidents/searchAccidents', 'AccidentController@searchAccidents')->name('accidents.searchAccidents');
 
 Route::resource('users','UserController');
-Route::resource('third_parties','ThirdPartyController');
 Route::resource('accidents','AccidentController');

@@ -50,12 +50,25 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('User Type') }}</label>
 
                             <div class="col-md-6">
-                                <select  name="type" id="type" style="width: 100%;" class="form-control @error('nic') is-invalid @enderror"  required autocomplete="nic" autofocus>
+                                <select  name="type" id="type" style="width: 100%;" class="form-control @error('type') is-invalid @enderror"  required autocomplete="type" autofocus>
                                     <option selected="selected" disabled>~ Select a user type ~</option>
                                     <option value="police_rda">Police / RDA User</option>
                                     <option value="insurance">Insurance Staff User</option>
                                 </select>
-                                @error('name')
+                                @error('type')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('NIC') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="nic" type="text" class="form-control @error('nic') is-invalid @enderror" name="nic" value="{{ old('nic') }}" required autocomplete="nic">
+
+                                @error('nic')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -110,42 +123,9 @@
         </div>
     </div>
 
-    @include('admin.includes.modals.productDeleteConfirmationModal')
-
 
 @endsection
 @section('scripts')
-    <script>
 
-        $(function () {
-
-
-
-            $('.select2').select2()
-            $('#example1').DataTable({
-                "order": [[ 0, "desc" ]]
-            });
-            $('#example2').DataTable({
-                'paging'      : true,
-                'lengthChange': false,
-                'searching'   : false,
-                'ordering'    : true,
-                'info'        : true,
-                'autoWidth'   : false
-            })
-        })
-
-        $('#productDeleteConfirmationModal').on('show.bs.modal', function(event){
-
-            var button = $(event.relatedTarget);
-
-            var id = button.data('id');
-
-            var modal = $(this);
-
-            modal.find('.modal-footer #prod_id').val(id);
-
-        });
-    </script>
 
 @endsection

@@ -83,13 +83,13 @@
     @if (Route::has('login'))
         <div class="top-right links">
             <a href="{{ url('/view-accident-map') }}" class="btn btn-danger" style="padding: 5px">ACCIDENTS REPORT</a>
-            @if(Auth::guard('admin')->check())
-                <a href="{{ url('/home') }}" class="btn btn-social-icon btn-info"><i class="fa fa-home"></i></a>
+            @if(Auth::check())
+                <a href="{{ url('/dashboard') }}" class="btn btn-social-icon btn-info"><i class="fa fa-home"></i></a>
                 <div class="pull-right">
-                    <a class="btn btn-warning" href="{{ route('logout') }}" style="margin-left: 5px"
+                    <a class="btn btn-default btn-flat" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-                        SIGN OUT
+                                                     document.getElementById('logout-form').submit();">
+                        Sign out
                     </a>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -98,11 +98,11 @@
 
                 </div>
             @else
-                <a href="{{ route('login') }}">LOGIN</a>
+                <a href="{{ url('/login-me') }}">LOGIN</a>
                 @if (Route::has('register'))
                     <a href="{{ route('register') }}">Register</a>
                 @endif
-            @endauth
+            @endif
         </div>
     @endif
 
