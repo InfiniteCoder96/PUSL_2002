@@ -1,5 +1,5 @@
 <?php use Carbon\Carbon; ?>
-@extends('layouts.user.app')
+@extends('layouts.thirdparty.insurance.app')
 
 
 @section('page-header')

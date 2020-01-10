@@ -28,7 +28,11 @@ class HomeController extends Controller
         }
         else if (auth()->user()->user_type == 'police_rda') {
             return view('thirdparty.police_rda.dashboard');
-        }else{
+        }
+        else if (auth()->user()->user_type == 'insurance') {
+            return view('thirdparty.insurance.dashboard');
+        }
+        else if(auth()->user()->user_type == 'driver'){
 
             $pending = DB::table('accidents')
                 ->where([
@@ -52,6 +56,9 @@ class HomeController extends Controller
                 ->count();
 
             return view('user.dashboard',compact('pending','approved','rejected'));
+        }
+        else{
+            return redirect()->route('login');
         }
     }
 

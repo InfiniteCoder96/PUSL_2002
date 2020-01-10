@@ -60,12 +60,19 @@ class LoginController extends Controller
 
                 return redirect()->route('dashboard');
             }
+            else if (auth()->user()->user_type == 'insurance') {
+
+                $request->session()->put('user_type', auth()->user()->user_type);
+
+                return redirect()->route('dashboard');
+            }
             else{
                 return redirect()->route('dashboard');
             }
         }else{
-            return redirect()->route('login')
-                ->with('error','Email-Address And Password Are Wrong.');
+            throw ValidationException::withMessages([
+                $request->get('email') => [trans('auth.failed')],
+            ]);
         }
     }
 

@@ -35,10 +35,10 @@
                 </marquee>
             </li>
             <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+            <li class="active"><a href="{{url('/dashboard')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
 
             <li >
-                <a href="{{url('accidents/create')}}"><i class="fa fa-bus"></i> <span>Report New Accident</span>
+                <a href="{{url('accidents/create')}}"><i class="fa fa-bus"></i> <span>Approved Accident List</span>
                     <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -46,7 +46,7 @@
 
             </li>
             <li>
-                <a href="{{url('accidents')}}"><i class="fa fa-database"></i> <span>Reported Accidents List</span>
+                <a href="{{url('accidents')}}"><i class="fa fa-database"></i> <span>Contact Drivers</span>
                     <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                 </a>
 
