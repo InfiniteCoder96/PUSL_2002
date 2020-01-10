@@ -96,7 +96,7 @@
     @if (Route::has('login'))
         <div class="top-right links">
             @if(Auth::check())
-                <a href="{{ url('/home') }}" class="btn btn-social-icon btn-info"><i class="fa fa-home"></i></a>
+                <a href="{{ url('/dashboard') }}" class="btn btn-social-icon btn-info"><i class="fa fa-home"></i></a>
                 <div class="pull-right">
                     <a class="btn btn-warning" href="{{ route('logout') }}" style="margin-left: 5px"
                        onclick="event.preventDefault();
@@ -110,7 +110,7 @@
 
                 </div>
             @else
-                <a href="{{ route('login') }}">LOGIN</a>
+                <a href="{{ url('/login-me') }}">LOGIN</a>
                 @if (Route::has('register'))
                     <a href="{{ route('register') }}">Register</a>
                 @endif
