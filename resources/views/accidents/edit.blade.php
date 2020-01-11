@@ -5,12 +5,12 @@
     <section class="content-header">
         <h1>
             Accidents
-            <small>new accident</small>
+            <small>edit accident</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">Accident</li>
-            <li class="active">Report New Accident</li>
+            <li class="active">Edit Accident</li>
         </ol>
     </section>
 @endsection
@@ -37,20 +37,21 @@
         <div class="col-xs-12">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Report New Accident</h3>
+                    <h3 class="box-title">Edit Accident</h3>
                     <div class="pull-right">
-                        <a class="btn btn-flat btn-danger disabled" >Accident ID: {{$id}}</a>
+                        <a class="btn btn-flat btn-danger disabled" >Accident ID: {{$accident->id}}</a>
                     </div>
                 </div>
-                <form role="form" action="{{ route('accidents.store') }}" method="POST" enctype="multipart/form-data" id="accident_create_form">
+                <form role="form" action="{{ route('accidents.update',$accident->id) }}" method="POST" enctype="multipart/form-data" id="accident_create_form">
                     @csrf
+                    @method('PUT')
                     <div class="box-body">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-xs-6 col-md-6">
                                     <div class="form-group">
                                         <label>Accident Name</label>
-                                        <input type="text" name="accident_name" id="accident_name" class="form-control" placeholder="Accident name">
+                                        <input type="text" name="accident_name" id="accident_name" class="form-control" placeholder="Accident name" value="{{$accident->name}}">
                                         <span class="help-block hide">Help block with error</span>
                                     </div>
                                 </div>
@@ -62,7 +63,7 @@
                                         <label>Accident Description</label>
 
 
-                                            <textarea name="accident_desc" class="form-control" ></textarea>
+                                            <textarea name="accident_desc" class="form-control">{{$accident->description}}</textarea>
 
                                         <span class="help-block hide">Help block with error</span>
                                     </div>
@@ -89,12 +90,12 @@
                                         <label>Accident Location Coordinates</label>
                                         <div class="input-group" style="width: 100%">
                                             <span class="input-group-addon">Latitude</span>
-                                            <input type="text" class="form-control" id="lat-span" name="lat" readonly>
+                                            <input type="text" class="form-control" id="lat-span" name="lat" value="{{$accident->lat}}" readonly>
                                         </div>
                                         <br>
                                         <div class="input-group" style="width: 100%">
                                             <span class="input-group-addon">Longitude</span>
-                                            <input type="text" class="form-control" id="lon-span" name="long" readonly>
+                                            <input type="text" class="form-control" id="lon-span" name="long" value="{{$accident->lang}}" readonly>
                                         </div>
 
                                         <span class="help-block hide">Help block with error</span>

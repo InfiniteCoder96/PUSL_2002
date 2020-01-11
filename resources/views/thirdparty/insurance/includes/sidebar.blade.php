@@ -44,12 +44,6 @@
               </span>
                 </a>
             </li>
-            <li>
-                <a href="{{url('accidents')}}"><i class="fa fa-database"></i> <span>Contact Drivers</span>
-                    <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-                </a>
-
-            </li>
 
         </ul>
         <!-- /.sidebar-menu -->

@@ -56,7 +56,7 @@
         }
 
         .title {
-            font-size: 84px;
+            font-size: 70px;
         }
 
         .links > a {
@@ -82,14 +82,14 @@
 <div class="flex-center position-ref full-height">
     @if (Route::has('login'))
         <div class="top-right links">
-            <a href="{{ url('/view-accident-map') }}" class="btn btn-danger" style="padding: 5px">ACCIDENTS REPORT</a>
+            <a href="{{ url('/view-accident-map') }}" class="btn btn-danger" style="padding: 7px">ACCIDENTS REPORT</a>
             @if(Auth::check())
                 <a href="{{ url('/dashboard') }}" class="btn btn-social-icon btn-info"><i class="fa fa-home"></i></a>
                 <div class="pull-right">
-                    <a class="btn btn-default btn-flat" href="{{ route('logout') }}"
+                    <a class="btn btn-warning" href="{{ route('logout') }}" style="margin-left: 5px"
                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                        Sign out
+                        document.getElementById('logout-form').submit();">
+                        SIGN OUT
                     </a>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

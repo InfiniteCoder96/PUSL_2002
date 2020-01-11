@@ -50,11 +50,10 @@
         html, body {
             background-image: url('https://i.pinimg.com/originals/41/aa/09/41aa09f7665923b7baa82997cdb49d67.gif');
             background-size: cover;
-            background-repeat: no-repeat;
             color: whitesmoke;
             font-family: 'Nunito', sans-serif;
             font-weight: 200;
-            height: 100vh;
+            height: 100%;
             margin: 0;
         }
 
@@ -123,70 +122,111 @@
     <br>
     <div class="row">
         <div class="col-lg-4 col-md-4 col-xs-12">
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-xs-12">
+                    <div class="small-box bg-red">
+                        <div class="inner">
+                            <h3>{{$critical_accidents}}</h3>
+
+                            <p>Crtical Accidents</p>
+
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">
+                            More info <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-xs-12">
+                    <div class="small-box bg-blue">
+                        <div class="inner">
+                            <h3>{{$normal_accidents}}</h3>
+
+                            <p>Normal Accidents</p>
+
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">
+                            More info <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-xs-12">
+                    <div class="small-box bg-green">
+                        <div class="inner">
+                            <h3>{{$minor_accidents}}</h3>
+
+                            <p>Minor Accidents</p>
+
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">
+                            More info <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
             <!-- small box -->
-            <div class="small-box bg-red">
-                <div class="inner">
-                    <h3>50</h3>
 
-                    <p>Critical Accidents</p>
+        </div>
+        <div class="col-lg-8 col-md-8 col-xs-12">
 
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Monthly Report</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
                 </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="#" class="small-box-footer">
-                    More info <i class="fa fa-arrow-circle-right"></i>
-                </a>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
 
+                        <div class="col-md-12">
+                            <div>
+                                <div id="cc"></div>
+                                <!-- Chart Canvas -->
+                            </div>
+                            <!-- /.chart-responsive -->
+                        </div>
+                        <!-- /.col -->
+
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- ./box-body -->
+
+                <!-- /.box-footer -->
             </div>
 
         </div>
 
-        <div class="col-lg-4 col-md-4 col-xs-12">
-            <!-- small box -->
-            <div class="small-box bg-orange">
-                <div class="inner">
-                    <h3>57</h3>
 
-                    <p>Medium Accidents</p>
 
-                </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="#" class="small-box-footer">
-                    More info <i class="fa fa-arrow-circle-right"></i>
-                </a>
-
-            </div>
-
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-xs-12">
-            <!-- small box -->
-            <div class="small-box bg-green">
-                <div class="inner">
-                    <h3>175</h3>
-
-                    <p>Minor Accidents</p>
-
-                </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="#" class="small-box-footer">
-                    More info <i class="fa fa-arrow-circle-right"></i>
-                </a>
-
-            </div>
-
-        </div>
     </div>
 
 </div>
 
 <script src="{{asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
 <script src="{{asset('bower_components/jquery-ui/jquery-ui.min.js')}}"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTPdk_OYvinStVEVcWPFtkVevH2UDOYBo&libraries=places"
         async defer></script>
 <script>
@@ -244,14 +284,13 @@
         function createMap(myLatLang){
             map = new google.maps.Map(document.getElementById('map'), {
                 center: myLatLang,
-                zoom: 12
+                zoom: 8
             });
 
             marker = new google.maps.Marker({
                 position: myLatLang,
                 map: map,
-                title: 'Your Location !',
-                draggable: true
+                title: 'Your Location !'
             });
         }
 
@@ -266,18 +305,6 @@
             });
 
 
-           /* var contentString = '<div id="content">'+
-                '<div id="siteNotice">'+
-                '</div>'+
-                '<h1 id="firstHeading" style="color: black">' + name + '</h1>'+
-                '<div id="bodyContent">'+
-                '<p style="color: black">' + val.description +'</p>'+
-                '<p style="color: black">Status:<span class="container">' +
-                '                                            <span class="label label-success">'+ val.status +'</span>' +
-                '                                        </span></p>'+
-                '</div>'+
-                '</div>';*/
-
             var contentString = document.createElement('div');
             var h4 = document.createElement('h4');
             h4.textContent = name;
@@ -287,8 +314,29 @@
             para.textContent = val.description;
             para.style.color = 'black';
 
+            var condition = document.createElement('p');
+
+            if(val.condition === 'critical'){
+                condition.textContent = val.condition + " accident";
+                condition.style.color = 'white';
+                condition.style.backgroundColor = 'red';
+            }
+            if(val.condition === 'normal'){
+                condition.textContent = val.condition + " accident";
+                condition.style.color = 'white';
+                condition.style.backgroundColor = 'blue';
+            }
+            if(val.condition === 'minor'){
+                condition.textContent = val.condition + " accident";
+                condition.style.color = 'white';
+                condition.style.backgroundColor = 'green';
+            }
+
+
+
             contentString.appendChild(h4);
             contentString.appendChild(para);
+            contentString.appendChild(condition);
             contentString.appendChild(document.createElement('br'));
 
             var img_01 = document.createElement('img');
@@ -314,43 +362,6 @@
         }
 
 
-
-
-
-        function nearbysearch(myLatLang,type) {
-
-            var request = {
-                location: myLatLang,
-                radius: '2500',
-                type: [type]
-            };
-
-            service = new google.maps.places.PlacesService(map);
-
-            service.nearbySearch(request, callback);
-
-            function callback(results, status) {
-
-                var latlng;
-                var icn;
-                var name;
-
-                if (status == google.maps.places.PlacesServiceStatus.OK) {
-                    for (var i = 0; i < results.length; i++) {
-
-                        var place = results[i];
-
-                        latlng = place.geometry.location;
-                        icn = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-                        name = place.name;
-
-                        createMarker(latlng, icn,name);
-                    }
-                }
-            }
-
-        }
-
         function searchAccidents(latVal,lanVal) {
 
             $.ajax({
@@ -371,9 +382,19 @@
                         var sname = val.name;
 
                         var aLatLng = new google.maps.LatLng(alatval, alangval);
-                        var aicon = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
 
-                        createMarker(aLatLng,aicon,sname,val)
+                        if(val.condition === 'critical'){
+                            var aicon = 'http://maps.google.com/mapfiles/kml/paddle/red-stars.png';
+                            createMarker(aLatLng,aicon,sname,val);
+                        }
+                        else if(val.condition === 'normal'){
+                            var aicon = 'http://maps.google.com/mapfiles/kml/paddle/blu-blank.png';
+                            createMarker(aLatLng,aicon,sname,val);
+                        }
+                        else if(val.condition === 'minor'){
+                            var aicon = 'http://maps.google.com/mapfiles/kml/paddle/grn-blank.png';
+                            createMarker(aLatLng,aicon,sname,val);
+                        }
                     })
                 }
             })
@@ -382,6 +403,71 @@
         }
 
 
+        var accidents =  <?php echo json_encode($accidents) ?>;
+        var accidents_approved = <?php echo json_encode($accidents_approved) ?>;
+        var accidents_rejected = <?php echo json_encode($accidents_rejected) ?>;
+
+        Highcharts.chart('cc', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Total Accidents Reported, ' + (new Date).getFullYear()
+            },
+            subtitle: {
+                text: 'Source: TAT Data'
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Total Sales'
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle'
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                },
+                series: {
+                    label: {
+                        connectorAllowed: false
+                    },
+                    allowPointSelect: true
+                }
+            },
+            series: [{
+                name: 'Accidents Reported',
+                data: accidents
+            },{
+                name: 'Accidents Approved',
+                data: accidents_approved
+            },{
+                name:'Accidents Rejected',
+                data: accidents_rejected
+            }],
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            }
+        });
 
     });
 </script>

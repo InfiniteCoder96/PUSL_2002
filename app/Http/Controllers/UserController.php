@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of drivers.
      *
      * @return \Illuminate\Http\Response
      */
@@ -20,18 +20,35 @@ class UserController extends Controller
         return view('admin.user_index',compact('drivers'));
     }
 
+    /**
+     * Display a listing of police / rda users.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function police_rda_index()
     {
         $drivers = User::all()->where('user_type','=','police_rda');
         return view('admin.user_index',compact('drivers'));
     }
 
+    /**
+     * Display a listing of insurance users.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function insurance_index()
     {
         $drivers = User::all()->where('user_type','=','insurance');
         return view('admin.user_index',compact('drivers'));
     }
 
+
+    /**
+     * register form validator for third parties
+     *
+     * @param array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
     protected function thirdparty_validator(array $data)
     {
         return Validator::make($data, [
@@ -43,15 +60,28 @@ class UserController extends Controller
         ]);
     }
 
+
+    /**
+     * show third party registration form
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showThird_PartiesRegisterForm()
     {
         return view('auth.register_third_parties', ['url' => 'third_parties']);
     }
 
+    /**
+     * create third party user
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     protected function createThird_Parties(Request $request)
     {
-        $this->thirdparty_validator($request->all())->validate();
-        $third_parties = User::create([
+        $this->thirdparty_validator($request->all())->validate(); // validating inputs
+
+        $third_parties = User::create([ // creating user
             'name' => $request['name'],
             'email' => $request['email'],
             'nic' => $request['nic'],
@@ -59,6 +89,7 @@ class UserController extends Controller
             'password' => Hash::make($request['password']),
         ]);
 
+        // redirect the admin based on user's type created
         if($request->get('type') == 'insurance')
             return redirect('/third_parties/insurance_index')
                 ->with('success','Insurance staff user added successfully.');

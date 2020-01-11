@@ -37,6 +37,7 @@ Route::get('/third_parties/police_rda_index', 'UserController@police_rda_index')
 Route::get('/third_parties/insurance_index', 'UserController@insurance_index')->name('insurance_index');
 
 Route::get('/accidents/all', 'AccidentController@all')->name('all');
+Route::get('/accidents/pending', 'AccidentController@pending')->name('pending');
 Route::post('/accidents/approve', 'AccidentController@approve')->name('accidents.approve');
 Route::post('/accidents/reject', 'AccidentController@reject')->name('accidents.reject');
 Route::post('/accidents/searchAccidents', 'AccidentController@searchAccidents')->name('accidents.searchAccidents');

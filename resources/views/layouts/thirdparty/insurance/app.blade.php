@@ -195,7 +195,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{asset('bower_components/chart.js/Chart.js')}}"></script>
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
-
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTPdk_OYvinStVEVcWPFtkVevH2UDOYBo&libraries=places"
+        async defer></script>
 @yield('scripts')
 <script>
 

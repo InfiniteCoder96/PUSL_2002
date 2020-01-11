@@ -9,13 +9,30 @@ use Illuminate\Support\Facades\DB;
 class AccidentController extends Controller
 {
 
+    /**
+     * showing all accidents
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function all()
     {
-        $accidents = Accident::all()->where('status','=', 'pending');
+        $accidents = Accident::all();
         return view('accidents.all',compact('accidents'));
     }
+
     /**
-     * Display a listing of the resource.
+     * showing all pending accidents
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function pending()
+    {
+        $accidents = Accident::all()->where('status','=', 'pending');
+        return view('accidents.pending',compact('accidents'));
+    }
+
+    /**
+     * Display a listing of accidents of logged in user created.
      *
      * @return \Illuminate\Http\Response
      */
@@ -27,7 +44,7 @@ class AccidentController extends Controller
 
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new accident.
      *
      * @return \Illuminate\Http\Response
      */
@@ -41,34 +58,37 @@ class AccidentController extends Controller
         }
 
         return view('accidents.create',compact('id'));
-
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created accdeint in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $accident = new Accident();
+        $accident = new Accident(); // create new instance of accident class
 
+        // get input data from the request
         $accident_name = $request->get('accident_name');
         $accident_desc = $request->get('accident_desc');
         $lat = $request->get('lat');
         $long = $request->get('long');
 
+        // assigning images files into images array
         $images = $request->file('file');
 
+        // assign input data into accident object
         $accident['name'] = $accident_name;
         $accident['description'] = $accident_desc;
         $accident['user_id'] = auth()->user()->id;
         $accident['lang'] = $long;
         $accident['lat'] = $lat;
 
-        for($i = 0; $i < 2; $i++){
-            $imageName = $accident_name . '_' . auth()->user()->id;
+        // storing images in application's storage file and sava name of the image in the database
+        for($i = 0; $i < sizeof($images); $i++){
+            $imageName = $accident_name . '_' . $i . '_' . auth()->user()->id . '.'.$images[$i]->extension();
             $images[$i]->move(public_path('images'),$imageName);
 
             $img = 'image_0' . ($i + 1);
@@ -88,7 +108,7 @@ class AccidentController extends Controller
      */
     public function show(Accident $accident)
     {
-        //
+        return view('accidents.show',compact('accident'));
     }
 
     /**
@@ -99,7 +119,7 @@ class AccidentController extends Controller
      */
     public function edit(Accident $accident)
     {
-        //
+        return view('accidents.edit',compact('accident'));
     }
 
     /**
@@ -111,38 +131,106 @@ class AccidentController extends Controller
      */
     public function update(Request $request, Accident $accident)
     {
-        //
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Accident  $accident
+     * @param Request $request
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function destroy(Accident $accident)
+    public function destroy(Request $request)
     {
-        //
+        $acc = Accident::all()->find($request->get('acc_id'));
+
+        $acc->delete();
+
+        return redirect()->route('accidents.index')
+            ->with('success','Accident deleted successfully');
     }
 
+
+    /**
+     * show accident map
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function view_accident_map(){
 
-        return view('accidents.map');
+        $critical_accidents = Accident::select(DB::raw("COUNT(id) as count"))
+            ->whereYear('created_at', date('Y'))
+            ->where('condition', '=','critical')
+            ->pluck('count');
+
+        $normal_accidents = Accident::select(DB::raw("COUNT(id) as count"))
+            ->whereYear('created_at', date('Y'))
+            ->where('condition', '=','normal')
+            ->pluck('count');
+
+        $minor_accidents = Accident::select(DB::raw("COUNT(id) as count"))
+            ->whereYear('created_at', date('Y'))
+            ->where('condition', '=','minor')
+            ->pluck('count');
+
+        $accidents = Accident::select(DB::raw("COUNT(id) as count"))
+            ->whereYear('created_at', date('Y'))
+            ->pluck('count');
+
+        $accidents_approved = Accident::select(DB::raw("COUNT(id) as count"))
+            ->where('status', '=', 'approved')
+            ->whereYear('created_at', date('Y'))
+            ->pluck('count');
+
+        $accidents_rejected = Accident::select(DB::raw("COUNT(id) as count"))
+            ->where('status', '=', 'rejected')
+            ->whereYear('created_at', date('Y'))
+            ->pluck('count');
+
+        $accidents_pending = Accident::select(DB::raw("COUNT(id) as count"))
+            ->where('status', '=', 'pending')
+            ->whereYear('created_at', date('Y'))
+            ->pluck('count');
+
+        return view('accidents.map', compact(
+            'accidents',
+            'accidents_pending',
+            'accidents_rejected',
+            'accidents_approved',
+            'critical_accidents',
+            'normal_accidents',
+            'minor_accidents'));
     }
 
+
+    /**
+     * approve accidents reported by drivers
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function approve(Request $request){
 
         $request->validate([
             'acc_id' => 'required'
         ]);
 
-        $acc_id = $request->get('acc_id');
+        $acc_id = $request->get('acc_id'); // get accident id
+        $acc_condition = $request->get('acc_condition'); // get accident id
 
-        Accident::where('id','=',$acc_id)->update(array('status' => 'approved'));
+        Accident::where('id','=',$acc_id)->update(array('status' => 'approved','condition' => $acc_condition)); // update accident's status
 
         return redirect()->back()->with('success','Accident has been approved !');
     }
 
+
+    /**
+     * reject accidents reported by driver
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function reject(Request $request){
 
         $request->validate([
@@ -156,14 +244,18 @@ class AccidentController extends Controller
         return redirect()->back()->with('unsuccess','Accident has been rejected !');
     }
 
+    /**
+     * search accidents based on user's location
+     *
+     * @param Request $request
+     * @return false|string
+     */
     public function searchAccidents(Request $request){
 
         $lat = $request->get('lat');
         $lang = $request->get('lang');
 
-        $accidents = Accident::whereBetween('lat', [$lat - 0.1, $lat + 0.1])
-            ->whereBetween('lang', [$lang - 0.1, $lang + 0.1])
-            ->where('status', '=', 'approved')
+        $accidents = Accident::where('status', '=', 'approved')
             ->get();
 
         return json_encode($accidents);
@@ -171,6 +263,11 @@ class AccidentController extends Controller
 
     }
 
+    /**
+     * show only approved accidents
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function approved_list(){
 
         $accidents = Accident::where('status','=','approved')->get();

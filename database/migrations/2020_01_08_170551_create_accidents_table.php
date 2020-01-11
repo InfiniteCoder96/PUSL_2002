@@ -23,6 +23,7 @@ class CreateAccidentsTable extends Migration
             $table->string('image_01');
             $table->string('image_02');
             $table->string('status')->default('pending');
+            $table->string('condition')->default('not_stated');
             $table->timestamps();
         });
     }

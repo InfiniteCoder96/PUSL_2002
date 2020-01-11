@@ -19,7 +19,13 @@
 
     <div class="row">
         <div class="col-xs-12">
-
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success alert-dismissible" id="success-alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-check"></i> Alert!</h4>
+                    {{ $message }}
+                </div>
+            @endif
             <div class="box">
                 <div class="box-header">
 
@@ -52,6 +58,7 @@
                             <th>Longitude</th>
                             <th>Photos</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -63,17 +70,46 @@
                                 <td>{{$accident->description}}</td>
                                 <td>{{$accident->lang}}</td>
                                 <td>{{$accident->lat}}</td>
-                                <td style="width: 50%">
+                                <td>
                                     <a href="{{asset('images/' . $accident->image_01)}}"><img src="{{asset('images/' . $accident->image_01)}}" style="width: 150px;height: 100px"/></a>
                                     <a href="{{asset('images/' . $accident->image_02)}}"><img src="{{asset('images/' . $accident->image_02)}}" style="width: 150px;height: 100px"/></a>
                                 </td>
-                                @if($accident->status == 'Approved')
-                                    <td style="background-color: green;color: white">{{$accident->status}}</td>
-                                @elseif($accident->status == 'Rejected')
-                                    <td style="background-color: red;color: white">{{$accident->status}}</td>
-                                @else
-                                    <td style="background-color: orange;color: white">{{$accident->status}}</td>
-                                @endif
+                                <td>
+                                    @if($accident->status == 'approved')
+
+                                        <span class="container">
+                                            <span class="label label-success">{{$accident->status}}</span>
+                                        </span>
+
+                                    @elseif($accident->status == 'rejected')
+
+                                        <span class="container">
+                                            <span class="label label-danger">{{$accident->status}}</span>
+                                        </span>
+
+                                    @else
+
+                                        <span class="container">
+                                            <span class="label label-warning">{{$accident->status}}</span>
+                                        </span>
+
+
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="col-md-6">
+                                        <button
+                                                type="button"
+                                                class="btn btn-xs btn-danger"
+                                                data-toggle="modal"
+                                                data-target="#accidentDeleteConfirmationModal"
+                                                data-id="{{$accident['id']}}"
+                                        >Delete</button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a class="btn btn-xs btn-success" href="{{ route('accidents.edit',$accident->id) }}">Edit</a>
+                                    </div>
+                                </td>
 
                             </tr>
                         @endforeach
@@ -88,7 +124,7 @@
                             <th>Longitude</th>
                             <th>Photos</th>
                             <th>Status</th>
-
+                            <th>Action</th>
 
                         </tr>
                         </tfoot>
@@ -124,7 +160,7 @@
             })
         })
 
-        $('#productDeleteConfirmationModal').on('show.bs.modal', function(event){
+        $('#accidentDeleteConfirmationModal').on('show.bs.modal', function(event){
 
             var button = $(event.relatedTarget);
 
@@ -132,7 +168,7 @@
 
             var modal = $(this);
 
-            modal.find('.modal-footer #prod_id').val(id);
+            modal.find('.modal-footer #acc_id').val(id);
 
         });
     </script>

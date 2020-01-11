@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Accident;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -11,24 +12,61 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-
-
-
     public function showdashboard()
     {
+        // based on the user logged in redirect him to the dashboard
         if (auth()->user()->user_type == 'admin') {
             return view('admin.dashboard');
         }
         else if (auth()->user()->user_type == 'police_rda') {
-            return view('thirdparty.police_rda.dashboard');
+
+            $accidents = Accident::select(DB::raw("COUNT(id) as count"))
+                ->whereYear('created_at', date('Y'))
+                ->pluck('count');
+
+            $accidents_approved = Accident::select(DB::raw("COUNT(id) as count"))
+                ->where('status', '=', 'approved')
+                ->whereYear('created_at', date('Y'))
+                ->pluck('count');
+
+            $accidents_rejected = Accident::select(DB::raw("COUNT(id) as count"))
+                ->where('status', '=', 'rejected')
+                ->whereYear('created_at', date('Y'))
+                ->pluck('count');
+
+            $accidents_pending = Accident::select(DB::raw("COUNT(id) as count"))
+                ->where('status', '=', 'pending')
+                ->whereYear('created_at', date('Y'))
+                ->pluck('count');
+
+            return view('thirdparty.police_rda.dashboard',compact('accidents','accidents_approved','accidents_rejected','accidents_pending'));
         }
         else if (auth()->user()->user_type == 'insurance') {
-            return view('thirdparty.insurance.dashboard');
+
+            $accidents = Accident::select(DB::raw("COUNT(id) as count"))
+                ->whereYear('created_at', date('Y'))
+                ->groupBy(DB::raw("Month(created_at)"))
+                ->pluck('count');
+
+            $accidents_approved = Accident::select(DB::raw("COUNT(id) as count"))
+                ->where('status', '=', 'approved')
+                ->whereYear('created_at', date('Y'))
+                ->groupBy(DB::raw("Month(created_at)"))
+                ->pluck('count');
+
+            $accidents_rejected = Accident::select(DB::raw("COUNT(id) as count"))
+                ->where('status', '=', 'rejected')
+                ->whereYear('created_at', date('Y'))
+                ->groupBy(DB::raw("Month(created_at)"))
+                ->pluck('count');
+
+            return view('thirdparty.insurance.dashboard',compact('accidents','accidents_approved','accidents_rejected'));
         }
         else if(auth()->user()->user_type == 'driver'){
 
@@ -60,23 +98,4 @@ class HomeController extends Controller
         }
     }
 
-    /*public function home()
-    {
-        return view('user.dashboard',compact('pending','approved','rejected'));
-    }
-
-    public function adminHome()
-    {
-        return view('admin.dashboard');
-    }
-
-    public function police_rda_index()
-    {
-        return view('thirdparty.police_rda.dashboard');
-    }
-
-    public function insurance_index()
-    {
-        return view('thirdparty.insurance.dashboard');
-    }*/
 }

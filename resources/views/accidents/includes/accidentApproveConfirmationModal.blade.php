@@ -15,6 +15,7 @@
                     {{csrf_field()}}
 
                     <input name="acc_id" id="acc_id" type="hidden" value="">
+                    <input name="acc_condition" id="acc_condition" type="hidden" value="">
 
                     <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">No, Go back</button>
                     <button class="btn btn-outline" id="submitbtn">Yes, I'm Sure</button>

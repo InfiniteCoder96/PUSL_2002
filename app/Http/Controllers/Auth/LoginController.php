@@ -45,46 +45,40 @@ class LoginController extends Controller
         ]);
     }
 
+    /**
+     * Main Login function
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function login_me(Request $request)
     {
+        // assign all login input data to input array
         $input = $request->all();
 
+        // validate input data using validator
         $this->validator($request->all())->validate();
 
+        // check login attempt success
         if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
         {
-            if (auth()->user()->user_type == 'admin') {
 
-                $request->session()->put('user_type', auth()->user()->user_type);
+            $request->session()->put('user_type', auth()->user()->user_type);
 
-                return redirect()->route('dashboard');
-            }
-            else if (auth()->user()->user_type == 'police_rda') {
+            return redirect()->route('dashboard');
 
-                $request->session()->put('user_type', auth()->user()->user_type);
-
-                return redirect()->route('dashboard');
-            }
-            else if (auth()->user()->user_type == 'insurance') {
-
-                $request->session()->put('user_type', auth()->user()->user_type);
-
-                return redirect()->route('dashboard');
-            }
-            else{
-                return redirect()->route('dashboard');
-            }
-        }else{
+        }else{ // if login attempt failed
             return redirect()->back()->with('message', "Invalid Credentials , Please try again.");
         }
     }
 
-
+    // show login form
     public function showLogin()
     {
         return view('auth.login');
     }
 
+    //
     public function showRegister()
     {
         return view('auth.register');

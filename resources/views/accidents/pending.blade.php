@@ -67,7 +67,7 @@
                             <th>Latitude</th>
                             <th>Longitude</th>
                             <th>Photos</th>
-                            <th>Status</th>
+                            <th>Condition</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -85,26 +85,7 @@
                                     <a href="{{asset('images/' . $accident->image_02)}}"><img src="{{asset('images/' . $accident->image_02)}}" style="width: 150px;height: 100px"/></a>
                                 </td>
                                 <td>
-                                    @if($accident->status == 'approved')
 
-                                        <span class="container">
-                                            <span class="label label-success">{{$accident->status}}</span>
-                                        </span>
-
-                                    @elseif($accident->status == 'rejected')
-
-                                        <span class="container">
-                                            <span class="label label-danger">{{$accident->status}}</span>
-                                        </span>
-
-                                    @else
-
-                                        <span class="container">
-                                            <span class="label label-warning">{{$accident->status}}</span>
-                                        </span>
-
-
-                                    @endif
                                 </td>
                                 <td>
                                     <div class="col-md-4">
@@ -120,9 +101,33 @@
                                                 data-img_2="{{$accident['image_02']}}"
                                                 data-acc="{{$accident}}"
                                         >Locate</button>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                            <button
+                                                    type="button"
+                                                    class="btn btn-xs btn-success"
+                                                    data-toggle="modal"
+                                                    data-target="#accidentApproveConfirmationModal"
+                                                    data-id="{{$accident['id']}}"
+                                            >Approve</button>
+
+                                    </div>
+                                    <div class="col-md-4">
+
+                                            <button
+                                                    type="button"
+                                                    class="btn btn-xs btn-danger"
+                                                    data-toggle="modal"
+                                                    data-target="#accidentRejectConfirmationModal"
+                                                    data-id="{{$accident['id']}}"
+                                            >Reject</button>
+
+                                    </div>
+
+
+
                                 </td>
-
-
                             </tr>
                         @endforeach
 
@@ -137,6 +142,7 @@
                             <th>Photos</th>
                             <th>Status</th>
                             <th>Action</th>
+
                         </tr>
                         </tfoot>
                     </table>
@@ -146,6 +152,8 @@
         </div>
     </div>
 
+    @include('accidents.includes.accidentApproveConfirmationModal')
+    @include('accidents.includes.accidentRejectConfirmationModal')
     @include('thirdparty.police_rda.includes.modals.accidentLocator')
 
 
@@ -176,6 +184,31 @@
             condition = $(this).val();
         });
 
+        $('#accidentApproveConfirmationModal').on('show.bs.modal', function(event){
+
+            var button = $(event.relatedTarget);
+
+            var id = button.data('id');
+            var con = condition;
+
+            var modal = $(this);
+
+            modal.find('.modal-footer #acc_id').val(id);
+            modal.find('.modal-footer #acc_condition').val(con);
+
+        });
+
+        $('#accidentRejectConfirmationModal').on('show.bs.modal', function(event){
+
+            var button = $(event.relatedTarget);
+
+            var id = button.data('id');
+
+            var modal = $(this);
+
+            modal.find('.modal-footer #acc_id').val(id);
+
+        });
 
         $('#accidentLocator').on('show.bs.modal', function(event){
 
