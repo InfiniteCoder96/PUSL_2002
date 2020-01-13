@@ -298,24 +298,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 </head>
 <!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to get the
-desired effect
-|---------------------------------------------------------|
-| SKINS         | skin-blue                               |
-|               | skin-black                              |
-|               | skin-purple                             |
-|               | skin-yellow                             |
-|               | skin-red                                |
-|               | skin-green                              |
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | fixed                                   |
-|               | layout-boxed                            |
-|               | layout-top-nav                          |
-|               | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
+
 -->
 <body class="hold-transition skin-blue sidebar-mini fixed">
 
@@ -455,7 +438,6 @@ desired effect
 <!--Data tables -->
 <script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
-
 
 <script src="{{asset('bower_components/PACE/pace.min.js')}}"></script>
 

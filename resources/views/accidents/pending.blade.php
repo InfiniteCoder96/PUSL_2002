@@ -165,18 +165,12 @@
 
         $(function () {
 
-            $('.select2').select2()
+            $('.select2').select2();
+
             $('#example1').DataTable({
                 "order": [[ 0, "desc" ]]
             });
-            $('#example2').DataTable({
-                'paging'      : true,
-                'lengthChange': false,
-                'searching'   : false,
-                'ordering'    : true,
-                'info'        : true,
-                'autoWidth'   : false
-            })
+
         })
 
         $('#condition').change(function () {

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>RCSM v1.0.0</title>
+    <title>PUSL 2002</title>
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('dist/img/favicon.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('dist/img/favicon.png')}}">
     <!-- Fonts -->
@@ -72,7 +72,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card ">
+                <div class="card">
                     @isset($url)
                     <div class="card-header"><h4 >Register Web Master</h4></div>
                         <div class="card-body">

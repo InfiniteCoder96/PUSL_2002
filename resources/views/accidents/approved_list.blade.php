@@ -194,7 +194,6 @@
                     title: name
                 });
 
-
                 var contentString = document.createElement('div');
                 var h4 = document.createElement('h4');
                 h4.textContent = name;

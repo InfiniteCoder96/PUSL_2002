@@ -17,7 +17,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
 Route::get('/dashboard', 'HomeController@showdashboard')->name('dashboard');
 
 Route::get('/login/admin', 'Auth\LoginController@showAdminLoginForm');
@@ -26,6 +25,7 @@ Route::get('/login/third_parties', 'Auth\LoginController@showThird_PartiesLoginF
 
 Route::get('/login-me', 'Auth\LoginController@showLogin')->name('login-me');
 Route::post('/login-me', 'Auth\LoginController@login_me');
+
 Route::post('/logout-me', 'Auth\LoginController@logoutMe');
 
 Route::get('/register/third_parties', 'UserController@showThird_PartiesRegisterForm');
